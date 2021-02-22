@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 # Create your views here.
 
 class IndexView(ListView):
-    template_name = 'CRUD/index.html'
+    template_name = 'index.html'
     context_object_name = 'contact_list'
 
     def get_queryset(self):
@@ -14,7 +14,7 @@ class IndexView(ListView):
 
 class ContactDetailView(DetailView):
     model = Persona
-    template_name = 'CRUD/contact-detail.html'
+    template_name = 'contact-detail.html'
 
 # CRUD.
 
@@ -26,9 +26,9 @@ def create(request):
             return redirect('index')
     form = PersonaForm()
 
-    return render(request,'CRUD/create.html',{'form': form})
+    return render(request,'create.html',{'form': form})
 
-def edit(request, pk, template_name='CRUD/edit.html'):
+def edit(request, pk, template_name='edit.html'):
     persona = get_object_or_404(Persona, pk=pk)
     form = PersonaForm(request.POST or None, instance=post)
     if form.is_valid():
@@ -36,7 +36,7 @@ def edit(request, pk, template_name='CRUD/edit.html'):
         return redirect('index')
     return render(request, template_name, {'form':form})
 
-def delete(request, pk, template_name='CRUD/confirm_delete.html'):
+def delete(request, pk, template_name='confirm_delete.html'):
     persona = get_object_or_404(Persona, pk=pk)
     if request.method=='POST':
         Persona.delete()
